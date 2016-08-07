@@ -1,5 +1,4 @@
 
-
 Generate Foreign Tables for PostgreSQL
 ===================================
 
@@ -7,7 +6,7 @@ This generates Foreign table definitions to be loaded into a PostgreSQL
 databases to access remote tables in PostgreSQL, Mysql, and SQL Server.
 
 
-The main program is ``generate-ft.rb``. This has two required arguments
+The main program is ``generate_foreign_tables.rb``. This has two required arguments
 and three optional arguments.
 
 ## Arguments
@@ -36,9 +35,6 @@ For a mysql database named ``dbexample`` at DNS hostname ``host`` on port
 ``1234`` with access credentials of ``user`` and ``password``. This would
 written as follows: ``mysql://user:password@host:1234/dbexample``
 
-Do *not* URL encode any special characters. The program will
-automatically encode the URL.
-
 ## Example Usage
 
 ### Example Invocation
@@ -46,7 +42,7 @@ automatically encode the URL.
 We assume out Foreign Server name is ``mysql_server``. And we will redirect
 the output to file `ft.sql``.
 
-``bundle exec ./generate-ft.rb -c mysql://user:password@host:1234/dbexample -n mysql_server > ft.sql``
+``bundle exec ./generate_foreign_tables.rb -c mysql://user:password@host:1234/dbexample -n mysql_server > ft.sql``
 
 
 

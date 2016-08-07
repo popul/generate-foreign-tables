@@ -1,0 +1,52 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    activemodel (4.1.9)
+      activesupport (= 4.1.9)
+      builder (~> 3.1)
+    activerecord (4.1.9)
+      activemodel (= 4.1.9)
+      activesupport (= 4.1.9)
+      arel (~> 5.0.0)
+    activerecord-sqlserver-adapter (4.1.2)
+      activerecord (~> 4.1.0)
+      arel
+    activesupport (4.1.9)
+      i18n (~> 0.6, >= 0.6.9)
+      json (~> 1.7, >= 1.7.7)
+      minitest (~> 5.1)
+      thread_safe (~> 0.1)
+      tzinfo (~> 1.1)
+    arel (5.0.1.20140414130214)
+    builder (3.2.2)
+    getopt-declare (1.32)
+    i18n (0.7.0)
+    json (1.8.3)
+    mini_portile2 (2.1.0)
+    minitest (5.9.0)
+    mysql (2.9.1)
+    pg (0.18.4)
+    rake (11.2.2)
+    thread_safe (0.3.5)
+    tiny_tds (1.0.4)
+      mini_portile2 (~> 2.0)
+    tzinfo (1.2.2)
+      thread_safe (~> 0.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  activerecord (= 4.1.9)
+  activerecord-sqlserver-adapter (>= 3.2.12)
+  getopt-declare
+  mysql
+  pg
+  rake
+  tiny_tds
+
+RUBY VERSION
+   ruby 2.2.4p230
+
+BUNDLED WITH
+   1.12.5
