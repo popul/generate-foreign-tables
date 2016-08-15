@@ -5,6 +5,7 @@
 require "rubygems"
 require "bundler/setup"
 
+
 require 'active_record'
 require 'Getopt/Declare'
 
@@ -158,7 +159,7 @@ class TableColumnAST
   def initialize()
   end
   def name
-      quote(@column_name)
+      quote(@column_name.downcase)
   end
   def self.create(col, has_extra_display_type, new_postgres_type, _date_column_null)
     c = new
@@ -556,7 +557,7 @@ class Formatter
           else
               col.name
           end
-      }.join(", ")
+      }.join(",\n            ")
   end
   def fdw_mv_mysqldate_format(remote_schema, remote_table, columns)
       column_list = mysqldate_fix_columns(columns)
@@ -595,7 +596,7 @@ class Formatter
   end
   def fdw_format(remote_schema, remote_table, columns, local_table=nil)
     local_table = remote_table if local_table.nil?
-    cols = columns.map{|x| "#{x.name} #{x.postgres_type}" }.join(", ")
+    cols = columns.map{|x| "#{x.name} #{x.postgres_type}" }.join(",\n       ")
     @col_types <<  columns.map{|x| x.display_type  }.uniq
 
     ft_name = local_table.downcase
@@ -667,10 +668,10 @@ def main()
 
     output = tables_columns.map do |table|
        t = TableAST.new(table)
-       @format.format(t) # :schema=>s,:table_name=>n,:columns=>c)
+       @format.format(t)
     end
 
     puts output.join("\n")
-    STDERR.puts @format.warnings.inspect if $DEBUG or true
+    STDERR.puts @format.warnings.inspect if $DEBUG
 end
 main()
