@@ -4,7 +4,7 @@ This program requires Ruby 2 environement and Bundler. The basic
 setup to run the program is as follows.
 
 * Install Ruby 2.2 & Bundler per Platform
-* ``bundle setup``
+* ``bundle install``
 * ``bundle exec generate_foreign_tables.rb``
 
 ## Mac OS X
@@ -23,6 +23,6 @@ will work.
 
 * ``apt-get install ruby ``
 * ``apt-get install bundler``
-* ``bundle setup --path bundle/vendor``
+* ``bundle install --path bundle/vendor``
 * ``bundle exec generate_foreign_tables.rb``
 
