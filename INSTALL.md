@@ -16,13 +16,13 @@ will work.
 * ``brew install ruby22``
 * ``gem install bundler``
 * You may need to modify your PATH as directed by Ruby or Brew
-* ``bundle install --path bundle/vendor``
+* ``bundle install --path vendor/bundle``
 * ``bundle exec generate_foreign_tables.rb``
 
 ## Linux 
 
 * ``apt-get install ruby ``
 * ``apt-get install bundler``
-* ``bundle install --path bundle/vendor``
+* ``bundle install --path vendor/bundle``
 * ``bundle exec generate_foreign_tables.rb``
 
