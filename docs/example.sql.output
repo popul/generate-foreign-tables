@@ -1,0 +1,158 @@
+This is output from the example.sql run. It is not reproducible due to license
+issues.
+
+% bundle exec generate_foreign_tables.rb -n remote_pug_server -c \
+      postgresql://$USER:password@localhost/pug_remote > docs/pug_remote_ft.sql
+% psql pug
+pug=# \i docs/example.sql 
+"Installing Foreign data wrappers"
+BEGIN
+CREATE SCHEMA
+SET
+CREATE TYPE
+psql:docs/load_fdws.sql:29: NOTICE:  table "fdw_configurations" does not
+exist, skipping
+DROP TABLE
+CREATE TABLE
+INSERT 0 2
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+CREATE FUNCTION
+psql:docs/load_fdws.sql:319: NOTICE:  Using Production environment FDW
+CONTEXT:  PL/pgSQL function load_ext(text) line 12 at RETURN QUERY
+   fdw_name   | status  
+--------------+---------
+ postgres_fdw | rebuild
+ null_fdw     | ok
+(2 rows)
+
+DROP TABLE
+psql:docs/load_fdws.sql:322: NOTICE:  drop cascades to 13 other objects
+DROP SCHEMA
+COMMIT
+"Installed Extensions."
+                                 List of installed extensions
+     Name     | Version |   Schema   |                       Description                       
+--------------+---------+------------+---------------------------------------------------------
+ dummy_data   | 1.0     | public     | Readable, Null Foreign Data Wrapper for
+Postgresql 9.3+
+ plpgsql      | 1.0     | pg_catalog | PL/pgSQL procedural language
+ postgres_fdw | 1.0     | public     | foreign-data wrapper for remote
+PostgreSQL servers
+(3 rows)
+
+"Installed FDWs."
+                     List of foreign-data wrappers
+     Name     |  Owner  |       Handler        |       Validator        
+--------------+---------+----------------------+------------------------
+ dummy_data   | slaught | dummy_handler        | -
+ null_fdw     | slaught | -                    | -
+ postgres_fdw | slaught | postgres_fdw_handler | postgres_fdw_validator
+(3 rows)
+
+BEGIN
+psql:docs/example.sql:5: NOTICE:  drop cascades to 2 other objects
+DETAIL:  drop cascades to foreign table remote_pug_fdw.table1
+drop cascades to foreign table remote_pug_fdw.table2
+DROP SCHEMA
+CREATE SCHEMA
+SET
+psql:docs/example.sql:11: NOTICE:  drop cascades to user mapping for public
+DROP SERVER
+CREATE SERVER
+CREATE USER MAPPING
+psql:docs/pug_remote_ft.sql:2: NOTICE:  foreign table "table1" does not exist,
+skipping
+DROP FOREIGN TABLE
+CREATE FOREIGN TABLE
+COMMENT
+COMMENT
+psql:docs/pug_remote_ft.sql:14: NOTICE:  foreign table "table2" does not
+exist, skipping
+DROP FOREIGN TABLE
+CREATE FOREIGN TABLE
+COMMENT
+COMMENT
+COMMENT
+COMMIT
+pug=# \d remote_pug_fdw.table1 
+   Foreign table "remote_pug_fdw.table1"
+ Column |  Type   | Modifiers | FDW Options 
+--------+---------+-----------+-------------
+ id     | integer |           | 
+ name   | text    |           | 
+Server: remote_pug_server
+FDW Options: (schema_name 'remote', table_name 'table1')
+
+pug=# \d+ remote_pug_fdw.table1 
+                            Foreign table "remote_pug_fdw.table1"
+ Column |  Type   | Modifiers | FDW Options | Storage  | Stats target |
+Description      
+--------+---------+-----------+-------------+----------+--------------+----------------------
+ id     | integer |           |             | plain    |              | remote
+type: integer
+ name   | text    |           |             | extended |              | remote
+type: text
+Server: remote_pug_server
+FDW Options: (schema_name 'remote', table_name 'table1')
+Has OIDs: no
+
+pug=# \d+ remote_pug_fdw.table2 
+                              Foreign table "remote_pug_fdw.table2"
+   Column   |  Type   | Modifiers | FDW Options | Storage  | Stats target |
+Description      
+------------+---------+-----------+-------------+----------+--------------+----------------------
+ id         | integer |           |             | plain    |              |
+remote type: integer
+ name       | text    |           |             | extended |              |
+remote type: text
+ updated_on | date    |           |             | plain    |              |
+remote type: date
+Server: remote_pug_server
+FDW Options: (schema_name 'remote', table_name 'table2')
+Has OIDs: no
+
+pug=# select * from remote_pug_fdw.table1 ;
+ id | name 
+----+------
+  1 | aaa
+  2 | bbb
+  3 | ccc
+(3 rows)
+
+pug=# select * from remote_pug_fdw.table1 ;
+ id | name 
+----+------
+  1 | aaa
+  2 | bbb
+  3 | ccc
+(3 rows)
+
+-- a delete was done on the remote database side
+
+pug=# select * from remote_pug_fdw.table1 ;
+ id | name 
+----+------
+  2 | bbb
+  3 | ccc
+(2 rows)
+
+pug=# select * from remote_pug_fdw.table2 ;
+ id | name | updated_on 
+----+------+------------
+  1 | ddd  | 2017-01-17
+  2 | eee  | 2016-12-07
+  3 | fff  | 2016-12-12
+(3 rows)
+
+pug=# \q
+
