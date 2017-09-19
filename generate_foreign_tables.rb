@@ -440,6 +440,8 @@ class SqlserverCatalog < ActiveRecord::Base
           "timestamp"
         when "datetime" then
           "timestamp"
+        when "datetime2" then
+          "timestamp"
         when "timestamp" then
           "timestamp"
         when "datetimeoffset" then
