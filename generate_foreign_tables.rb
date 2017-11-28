@@ -152,7 +152,7 @@ class TableColumnAST
   attr_accessor :date_column_null
 
   include Quoting
- 
+
   def is_date_column?
       not date_column_null.nil?
   end
@@ -518,20 +518,20 @@ class Formatter
     self.vendor_name=vendor
     @col_types = Array.new
     @names = Names.new
-    if self.vendor_name =~ /mysql/ then 
+    if self.vendor_name =~ /mysql/ then
       @format = Formatter.determine_format(mv, mysql_fixup)  # only fixup on mysql date
     else
-      @format = Formatter.determine_format(mv, false) 
+      @format = Formatter.determine_format(mv, false)
     end
   end
-  #format is "fdw", optional ( mv | mysqldate) ,  "format" 
-  # all seperate by underscores 
+  #format is "fdw", optional ( mv | mysqldate) ,  "format"
+  # all seperate by underscores
   def self.determine_format(mv, mysql_fixup)
     formats = []
     if not mv.nil? then
-      formats << "mv" 
+      formats << "mv"
     end
-    if mysql_fixup then 
+    if mysql_fixup then
       formats.push "mysqldate"
     end
     formats.unshift "fdw"
@@ -553,7 +553,7 @@ class Formatter
   def mysqldate_fix_columns(columns)
       #return "*" unless @format.to_s =~ /mysql/
       columns.map{|col|
-          if col.is_date_column? then 
+          if col.is_date_column? then
              fmt, newtype = col.date_column_null
              %Q[nullif(#{col.name}, '#{fmt}')::#{newtype} as #{col.name}]
           else
@@ -604,13 +604,13 @@ class Formatter
     ft_name = local_table.downcase
     name_seen(ft_name)
   %Q[
-    DROP FOREIGN TABLE IF EXISTS #{quote(ft_name)};
-    CREATE FOREIGN TABLE #{quote(ft_name)}
+    DROP FOREIGN TABLE IF EXISTS #{quote(remote_schema)}.#{quote(ft_name)};
+    CREATE FOREIGN TABLE #{quote(remote_schema)}.#{quote(ft_name)}
       (#{cols})
     SERVER "#{self.server_name}"
     OPTIONS (#{options(remote_table, remote_schema)}
     );
-#{column_comments(ft_name, columns)}]
+  ]
   end
   def options(remote_table, remote_schema)
       send("#{vendor_name}_options".to_sym, remote_table, remote_schema)
